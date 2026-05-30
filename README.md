@@ -1,77 +1,81 @@
 # semble-executable
 
-Packages [semble](https://github.com/MinishLab/semble) as a standalone executable binary using PyInstaller. No Python installation required to run the resulting binary.
+Packages [semble](https://github.com/MinishLab/semble) into standalone executables using PyInstaller. No Python installation required to run the resulting binaries.
 
-## Prerequisites
+## Platforms
 
-- Python 3.10+ (for building only)
-- [uv](https://docs.astral.sh/uv/getting-started/installation/) (recommended) or pip
+| Platform | Architecture | Artifact |
+|----------|-------------|----------|
+| Linux | x64 | `semble-linux-x64` |
+| Linux | ARM64 | `semble-linux-arm64` |
+| macOS | Intel (x64) | `semble-macos-x64` |
+| macOS | Apple Silicon (ARM64) | `semble-macos-arm64` |
+| Windows | x64 | `semble-windows-x64.exe` |
+| Windows | ARM64 | `semble-windows-arm64.exe` |
 
-## Quick Start
+## Download
 
-```bash
-# Install dependencies
-uv sync
-
-# Build the executable
-uv run python build.py
-
-# The binary is at: dist/semble
-```
-
-## What Gets Built
-
-The output is a single `semble` binary (or `semble.exe` on Windows) in `dist/` that includes:
-- The semble CLI and all its dependencies (model2vec, tree-sitter, bm25s, etc.)
-- Tree-sitter language grammars
-- The potion-code-16M model (downloaded at first run if not bundled)
+Grab the latest binary from the [Releases](../../releases) page, or download the build artifact from the Actions tab.
 
 ## Usage
 
-The executable works exactly like the installed `semble` CLI:
+The executable works exactly like the `semble` CLI:
 
 ```bash
+# Make it executable (Linux/macOS)
+chmod +x semble-macos-arm64
+
 # Search a local repo
-./dist/semble search "authentication flow" ./my-project
+./semble-macos-arm64 search "authentication flow" ./my-project
 
 # Search a remote repo
-./dist/semble search "save model" https://github.com/MinishLab/model2vec
+./semble-macos-arm64 search "save model" https://github.com/MinishLab/model2vec
 
 # Find related code
-./dist/semble find-related src/auth.py 42 ./my-project
+./semble-macos-arm64 find-related src/auth.py 42 ./my-project
 
-# Run as MCP server (requires --with-mcp build flag)
-./dist/semble --content all
+# Run as MCP server
+./semble-macos-arm64
 ```
 
-## Build Options
+## Building Locally
+
+Requires Python 3.10+ and [uv](https://docs.astral.sh/uv/getting-started/installation/).
 
 ```bash
-# One-file mode (default) - single portable binary
-uv run python build.py --onefile
+# Install dependencies
+uv sync --extra mcp
 
-# One-dir mode - faster startup, directory with all files
-uv run python build.py --onedir
-
-# Include MCP server support
+# Build the executable
 uv run python build.py --with-mcp
 
-# Specify output name
-uv run python build.py --name semble-search
+# Binary is at dist/semble (~29 MB)
+./dist/semble search "query" .
 ```
 
-## Platform Support
+### Build options
 
-Build on each target platform to get a native binary:
-- macOS (Intel & Apple Silicon)
-- Linux (x86_64)
-- Windows (x86_64)
-
-Cross-compilation is not supported by PyInstaller; build on the target OS.
+```bash
+uv run python build.py --onefile        # Single portable binary (default)
+uv run python build.py --onedir         # Directory mode (faster startup)
+uv run python build.py --name my-semble # Custom binary name
+uv run python build.py --with-mcp       # Include MCP server support
+```
 
 ## CI/CD
 
-See `.github/workflows/build.yml` for automated builds on all platforms.
+The GitHub Actions workflow (`.github/workflows/build.yml`) builds on every push to `main` and on PRs. To create a release with downloadable binaries:
+
+```bash
+git tag v0.1.0
+git push --tags
+```
+
+This triggers the release job which uploads all 6 platform binaries plus SHA-256 checksums.
+
+## How It Works
+
+PyInstaller bundles the CPython interpreter, semble, and all dependencies (model2vec, tree-sitter grammars, numpy, etc.) into a single self-contained binary. The code runs at the same speed as a normal Python install — the benefit is zero-install portability.
 
 ## License
 
