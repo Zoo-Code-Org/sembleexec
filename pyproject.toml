@@ -1,0 +1,23 @@
+[project]
+name = "semble-executable"
+version = "0.1.0"
+description = "Packages semble as a standalone executable"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+
+dependencies = [
+    "semble>=0.3.0",
+    "pyinstaller>=6.0",
+]
+
+[project.optional-dependencies]
+mcp = [
+    "semble[mcp]>=0.3.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["hooks"]
