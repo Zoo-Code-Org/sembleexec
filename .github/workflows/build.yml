@@ -50,35 +50,79 @@ jobs:
       - name: Install dependencies
         run: uv sync --extra mcp
 
-      - name: Build executable
+      - name: Build onefile executable
         run: uv run python build.py --name semble --with-mcp
 
-      - name: Smoke test (Unix)
-        if: runner.os != 'Windows'
-        run: |
-          chmod +x dist/semble
-          ./dist/semble search --help
-          ./dist/semble init --help
-
-      - name: Smoke test (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          dist\semble.exe search --help
-          dist\semble.exe init --help
-
-      - name: Rename artifact (Unix)
+      - name: Rename onefile artifact (Unix)
         if: runner.os != 'Windows'
         run: mv dist/semble dist/${{ matrix.artifact }}
 
-      - name: Rename artifact (Windows)
+      - name: Rename onefile artifact (Windows)
         if: runner.os == 'Windows'
         run: mv dist/semble.exe dist/${{ matrix.artifact }}
 
-      - name: Upload artifact
+      - name: Build onedir executable
+        run: uv run python build.py --onedir --name semble --with-mcp
+
+      - name: Smoke test onefile (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          chmod +x dist/${{ matrix.artifact }}
+          ./dist/${{ matrix.artifact }} search --help
+          ./dist/${{ matrix.artifact }} init --help
+
+      - name: Smoke test onefile (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          dist\${{ matrix.artifact }} search --help
+          dist\${{ matrix.artifact }} init --help
+
+      - name: Smoke test onedir (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          chmod +x dist/semble/semble
+          ./dist/semble/semble search --help
+          ./dist/semble/semble init --help
+
+      - name: Smoke test onedir (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          dist\semble\semble.exe search --help
+          dist\semble\semble.exe init --help
+
+      - name: Package onedir as archive (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          cd dist/semble
+          tar -czf ../semble-${{ matrix.target }}-fast.tar.gz .
+
+      - name: Package onedir as archive (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          cd dist/semble
+          Compress-Archive -Path * -DestinationPath ../semble-${{ matrix.target }}-fast.zip
+
+      - name: Upload onefile artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact }}
           path: dist/${{ matrix.artifact }}
+          retention-days: 30
+
+      - name: Upload onedir artifact (Unix)
+        if: runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: semble-${{ matrix.target }}-fast.tar.gz
+          path: dist/semble-${{ matrix.target }}-fast.tar.gz
+          retention-days: 30
+
+      - name: Upload onedir artifact (Windows)
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: semble-${{ matrix.target }}-fast.zip
+          path: dist/semble-${{ matrix.target }}-fast.zip
           retention-days: 30
 
   integration-test:
@@ -163,6 +207,8 @@ jobs:
 
             No Python installation required. Download the binary for your platform and run it directly.
 
+            ### Single-file binaries (portable, slower startup)
+
             | Platform | Architecture | File |
             |----------|-------------|------|
             | Linux | x64 | `semble-linux-x64` |
@@ -170,10 +216,27 @@ jobs:
             | macOS | Apple Silicon (ARM64) | `semble-macos-arm64` |
             | Windows | x64 | `semble-windows-x64.exe` |
 
+            ### Fast-start archives (extract and run, ~20x faster startup)
+
+            | Platform | Architecture | File |
+            |----------|-------------|------|
+            | Linux | x64 | `semble-linux-x64-fast.tar.gz` |
+            | Linux | ARM64 | `semble-linux-arm64-fast.tar.gz` |
+            | macOS | Apple Silicon (ARM64) | `semble-macos-arm64-fast.tar.gz` |
+            | Windows | x64 | `semble-windows-x64-fast.zip` |
+
             ### Usage
+
+            **Single-file (portable):**
             ```bash
-            chmod +x semble-*
+            chmod +x semble-linux-x64
             ./semble-linux-x64 search "authentication flow" ./my-project
+            ```
+
+            **Fast-start (recommended for repeated use):**
+            ```bash
+            tar -xzf semble-linux-x64-fast.tar.gz -C semble/
+            ./semble/semble search "authentication flow" ./my-project
             ```
 
             ### Verify checksums

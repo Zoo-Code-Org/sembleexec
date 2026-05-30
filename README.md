@@ -4,12 +4,16 @@ Packages [semble](https://github.com/MinishLab/semble) into standalone executabl
 
 ## Platforms
 
-| Platform | Architecture | Artifact |
-|----------|-------------|----------|
-| Linux | x64 | `semble-linux-x64` |
-| Linux | ARM64 | `semble-linux-arm64` |
-| macOS | Apple Silicon (ARM64) | `semble-macos-arm64` |
-| Windows | x64 | `semble-windows-x64.exe` |
+| Platform | Architecture | Single-file | Fast-start archive |
+|----------|-------------|-------------|-------------------|
+| Linux | x64 | `semble-linux-x64` | `semble-linux-x64-fast.tar.gz` |
+| Linux | ARM64 | `semble-linux-arm64` | `semble-linux-arm64-fast.tar.gz` |
+| macOS | Apple Silicon (ARM64) | `semble-macos-arm64` | `semble-macos-arm64-fast.tar.gz` |
+| Windows | x64 | `semble-windows-x64.exe` | `semble-windows-x64-fast.zip` |
+
+**Single-file** — one portable binary, no extraction needed. Slower startup (~6s) due to decompression on each run.
+
+**Fast-start** — a compressed archive containing the binary + pre-extracted dependencies. ~20x faster startup, recommended for repeated use or MCP server mode.
 
 ## Download
 
@@ -20,11 +24,13 @@ Grab the latest binary from the [Releases](../../releases) page, or download the
 The executable works exactly like the `semble` CLI:
 
 ```bash
-# Make it executable (Linux/macOS)
+# Single-file: make it executable and run (Linux/macOS)
 chmod +x semble-macos-arm64
-
-# Search a local repo
 ./semble-macos-arm64 search "authentication flow" ./my-project
+
+# Fast-start: extract and run
+tar -xzf semble-macos-arm64-fast.tar.gz -C semble/
+./semble/semble search "authentication flow" ./my-project
 
 # Search a remote repo
 ./semble-macos-arm64 search "save model" https://github.com/MinishLab/model2vec
@@ -32,8 +38,8 @@ chmod +x semble-macos-arm64
 # Find related code
 ./semble-macos-arm64 find-related src/auth.py 42 ./my-project
 
-# Run as MCP server
-./semble-macos-arm64
+# Run as MCP server (fast-start recommended)
+./semble/semble
 ```
 
 ## Building Locally
