@@ -8,7 +8,6 @@ Packages [semble](https://github.com/MinishLab/semble) into standalone executabl
 |----------|-------------|----------|
 | Linux | x64 | `semble-linux-x64` |
 | Linux | ARM64 | `semble-linux-arm64` |
-| macOS | Intel (x64) | `semble-macos-x64` |
 | macOS | Apple Silicon (ARM64) | `semble-macos-arm64` |
 | Windows | x64 | `semble-windows-x64.exe` |
 

@@ -23,10 +23,6 @@ jobs:
             target: linux-arm64
             artifact: semble-linux-arm64
 
-          - os: macos-15-intel
-            target: macos-x64
-            artifact: semble-macos-x64
-
           - os: macos-14
             target: macos-arm64
             artifact: semble-macos-arm64
@@ -118,7 +114,6 @@ jobs:
             |----------|-------------|------|
             | Linux | x64 | `semble-linux-x64` |
             | Linux | ARM64 | `semble-linux-arm64` |
-            | macOS | Intel (x64) | `semble-macos-x64` |
             | macOS | Apple Silicon (ARM64) | `semble-macos-arm64` |
             | Windows | x64 | `semble-windows-x64.exe` |
 
