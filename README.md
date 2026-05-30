@@ -11,7 +11,6 @@ Packages [semble](https://github.com/MinishLab/semble) into standalone executabl
 | macOS | Intel (x64) | `semble-macos-x64` |
 | macOS | Apple Silicon (ARM64) | `semble-macos-arm64` |
 | Windows | x64 | `semble-windows-x64.exe` |
-| Windows | ARM64 | `semble-windows-arm64.exe` |
 
 ## Download
 
