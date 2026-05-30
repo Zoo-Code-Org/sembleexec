@@ -81,8 +81,61 @@ jobs:
           path: dist/${{ matrix.artifact }}
           retention-days: 30
 
-  release:
+  integration-test:
     needs: [build]
+    runs-on: ubuntu-22.04
+    name: Integration Test (linux-x64)
+
+    steps:
+      - name: Download linux-x64 binary
+        uses: actions/download-artifact@v4
+        with:
+          name: semble-linux-x64
+
+      - name: Make executable
+        run: chmod +x semble-linux-x64
+
+      - name: Clone a test repo
+        run: git clone --depth 1 https://github.com/MinishLab/model2vec test-repo
+
+      - name: Test search
+        run: |
+          OUTPUT=$(./semble-linux-x64 search "save model to disk" ./test-repo)
+          echo "$OUTPUT"
+          echo "$OUTPUT" | python3 -c "import sys, json; data = json.load(sys.stdin); assert len(data['results']) > 0, 'No results returned'"
+
+      - name: Test find-related
+        run: |
+          OUTPUT=$(./semble-linux-x64 search "load pretrained" ./test-repo)
+          FILE=$(echo "$OUTPUT" | python3 -c "import sys, json; print(json.load(sys.stdin)['results'][0]['chunk']['file_path'])")
+          echo "Using file: $FILE"
+          RELATED=$(./semble-linux-x64 find-related "$FILE" 1 ./test-repo)
+          echo "$RELATED"
+          echo "$RELATED" | python3 -c "import sys, json; data = json.load(sys.stdin); assert len(data['results']) > 0, 'No related results'"
+
+      - name: Test search with --content all
+        run: |
+          OUTPUT=$(./semble-linux-x64 search "installation" ./test-repo --content all)
+          echo "$OUTPUT"
+          echo "$OUTPUT" | python3 -c "import sys, json; data = json.load(sys.stdin); assert len(data['results']) > 0, 'No results with --content all'"
+
+      - name: Test search with top-k
+        run: |
+          OUTPUT=$(./semble-linux-x64 search "tokenizer" ./test-repo -k 3)
+          echo "$OUTPUT"
+          echo "$OUTPUT" | python3 -c "import sys, json; data = json.load(sys.stdin); assert len(data['results']) <= 3, 'top-k not respected'"
+
+      - name: Test init
+        run: |
+          ./semble-linux-x64 init --agent claude
+          test -f .claude/agents/semble-search.md
+          echo "Init created agent file successfully"
+
+      - name: Test savings
+        run: ./semble-linux-x64 savings
+
+  release:
+    needs: [build, integration-test]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
 
