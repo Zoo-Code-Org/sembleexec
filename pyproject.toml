@@ -6,13 +6,13 @@ requires-python = ">=3.10"
 license = {text = "MIT"}
 
 dependencies = [
-    "semble>=0.3.0",
+    "semble>=0.4.1",
     "pyinstaller>=6.0",
 ]
 
 [project.optional-dependencies]
 mcp = [
-    "semble[mcp]>=0.3.0",
+    "semble[mcp]>=0.4.1",
 ]
 
 [build-system]
