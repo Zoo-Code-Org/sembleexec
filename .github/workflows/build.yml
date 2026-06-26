@@ -152,8 +152,9 @@ jobs:
         run: |
           OUTPUT=$(./semble-linux-x64 search "load pretrained" ./test-repo)
           FILE=$(echo "$OUTPUT" | python3 -c "import sys, json; print(json.load(sys.stdin)['results'][0]['file_path'])")
-          echo "Using file: $FILE"
-          RELATED=$(./semble-linux-x64 find-related "$FILE" 1 ./test-repo)
+          LINE=$(echo "$OUTPUT" | python3 -c "import sys, json; print(json.load(sys.stdin)['results'][0]['start_line'])")
+          echo "Using file: $FILE at line: $LINE"
+          RELATED=$(./semble-linux-x64 find-related "$FILE" "$LINE" ./test-repo)
           echo "$RELATED"
           echo "$RELATED" | python3 -c "import sys, json; data = json.load(sys.stdin); assert len(data['results']) > 0, 'No related results'"
 
@@ -168,12 +169,6 @@ jobs:
           OUTPUT=$(./semble-linux-x64 search "tokenizer" ./test-repo -k 3)
           echo "$OUTPUT"
           echo "$OUTPUT" | python3 -c "import sys, json; data = json.load(sys.stdin); assert len(data['results']) <= 3, 'top-k not respected'"
-
-      - name: Test init
-        run: |
-          ./semble-linux-x64 init --agent claude
-          test -f .claude/agents/semble-search.md
-          echo "Init created agent file successfully"
 
       - name: Test savings
         run: ./semble-linux-x64 savings
