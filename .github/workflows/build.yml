@@ -151,7 +151,7 @@ jobs:
       - name: Test find-related
         run: |
           OUTPUT=$(./semble-linux-x64 search "load pretrained" ./test-repo)
-          FILE=$(echo "$OUTPUT" | python3 -c "import sys, json; print(json.load(sys.stdin)['results'][0]['chunk']['file_path'])")
+          FILE=$(echo "$OUTPUT" | python3 -c "import sys, json; print(json.load(sys.stdin)['results'][0]['file_path'])")
           echo "Using file: $FILE"
           RELATED=$(./semble-linux-x64 find-related "$FILE" 1 ./test-repo)
           echo "$RELATED"
