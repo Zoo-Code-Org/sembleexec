@@ -1510,7 +1510,7 @@ wheels = [
 
 [[package]]
 name = "semble"
-version = "0.5.6"
+version = "0.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "model2vec" },
@@ -1520,11 +1520,12 @@ dependencies = [
     { name = "pathspec" },
     { name = "questionary" },
     { name = "semble-grammars" },
+    { name = "tqdm" },
     { name = "vicinity" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c4/30/552b2f537f1cde61839953da3970f50e9988874a6a2a066b6ce35c031b7a/semble-0.5.6.tar.gz", hash = "sha256:dbc14a4075a7a93aaf6473a1b830032c596ec242f1d62819d26360891fc4d1b7", size = 108857, upload-time = "2026-09-05T06:11:23.051Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0a/a5/1030f00c384cd74355d2590aa475230d5c99000a49c4965e2379014221c5/semble-0.6.0.tar.gz", hash = "sha256:7db7b3413072a83fef7506d3204333100f659637febaed1dc7f8030fb800b674", size = 115285, upload-time = "2026-09-11T10:27:26.762Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3b/eb/508ed0f357d3e68ba42e53ef2dc9736a1e6684fa849e1738acd9a719a7a8/semble-0.5.6-py3-none-any.whl", hash = "sha256:73a0cd5afd740179c0a72b90c90c6c772addecaee2d5e4e775c587e80200f2f6", size = 79370, upload-time = "2026-09-05T06:11:21.526Z" },
+    { url = "https://files.pythonhosted.org/packages/1d/50/7628db963e266e162366ea849c6b93cf20ea9ab41392f4bc23aacd87cdd0/semble-0.6.0-py3-none-any.whl", hash = "sha256:f709f198d4c3f9b214dc9e34497eafe52843e0d300747602aad8a83855c199c7", size = 84435, upload-time = "2026-09-11T10:27:25.263Z" },
 ]
 
 [package.optional-dependencies]
@@ -1549,8 +1550,8 @@ mcp = [
 [package.metadata]
 requires-dist = [
     { name = "pyinstaller", specifier = ">=6.0" },
-    { name = "semble", specifier = ">=0.5.6" },
-    { name = "semble", extras = ["mcp"], marker = "extra == 'mcp'", specifier = ">=0.5.6" },
+    { name = "semble", specifier = ">=0.6.0" },
+    { name = "semble", extras = ["mcp"], marker = "extra == 'mcp'", specifier = ">=0.6.0" },
 ]
 provides-extras = ["mcp"]
 
