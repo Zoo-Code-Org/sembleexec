@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.10"
 resolution-markers = [
     "python_full_version >= '3.11'",
@@ -1510,7 +1510,7 @@ wheels = [
 
 [[package]]
 name = "semble"
-version = "0.6.1"
+version = "0.6.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "model2vec" },
@@ -1523,9 +1523,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "vicinity" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/64/ef/00bacf43342a0f2c4511e13daee39aa487fe9d8907e4a952f8a505812314/semble-0.6.1.tar.gz", hash = "sha256:d0045f1516d0f05d739631985f33e2c234eab9ea99f32d6223184827a143428d", size = 116546, upload-time = "2026-09-25T07:17:42.929Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a4/12/984276731ddf56bbe639633f9a99fca55ef199feefe8d957dde8619c72a0/semble-0.6.2.tar.gz", hash = "sha256:1207b43f26bd664fa12b14db0bb8a8b97ce95a1cf8597e8ca94922d7f3cd5a94", size = 117206, upload-time = "2026-10-05T09:26:57.71Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/de/62/0287f43a8d6012fa9a4406d75bc6a6a1ee3d190732e8d7d9760122f77bc2/semble-0.6.1-py3-none-any.whl", hash = "sha256:fea96cf60d93555966d57f26604b8ef935bf3f876757568cec9fe655dd651256", size = 88135, upload-time = "2026-09-25T07:17:41.508Z" },
+    { url = "https://files.pythonhosted.org/packages/26/86/55ba9acd906d4ee721e1c79f88d01d1359f6b4d2bdeb84434bc3a4936f2c/semble-0.6.2-py3-none-any.whl", hash = "sha256:94110c12da424a676cdec5a32adb1faee00ffcd3f494ea9fb88b4cd7efabac9a", size = 88308, upload-time = "2026-10-05T09:26:55.9Z" },
 ]
 
 [package.optional-dependencies]
@@ -1550,8 +1550,8 @@ mcp = [
 [package.metadata]
 requires-dist = [
     { name = "pyinstaller", specifier = ">=6.0" },
-    { name = "semble", specifier = ">=0.6.1" },
-    { name = "semble", extras = ["mcp"], marker = "extra == 'mcp'", specifier = ">=0.6.1" },
+    { name = "semble", specifier = ">=0.6.2" },
+    { name = "semble", extras = ["mcp"], marker = "extra == 'mcp'", specifier = ">=0.6.2" },
 ]
 provides-extras = ["mcp"]
 
