@@ -4,7 +4,7 @@ requires-python = ">=3.10"
 resolution-markers = [
     "python_full_version >= '3.14'",
     "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten'",
-    "(python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform != 'emscripten') or (python_full_version == '3.11.*' and sys_platform == 'emscripten')",
+    "python_full_version == '3.11.*' or (python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten')",
     "python_full_version < '3.11'",
 ]
 
@@ -694,7 +694,7 @@ source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
     "python_full_version >= '3.14'",
     "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten'",
-    "(python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform != 'emscripten') or (python_full_version == '3.11.*' and sys_platform == 'emscripten')",
+    "python_full_version == '3.11.*' or (python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten')",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d0/ad/fed0499ce6a338d2a03ebae59cd15093910c8875328855781952abf6c2fe/numpy-2.4.6.tar.gz", hash = "sha256:f3a3570c4a2a16746ac2c31a7c7c7b0c186b95ce902e33db6f28094ed7387dda", size = 20735807, upload-time = "2026-05-18T23:37:14.07Z" }
 wheels = [
@@ -1386,7 +1386,7 @@ source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
     "python_full_version >= '3.14'",
     "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten'",
-    "(python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform != 'emscripten') or (python_full_version == '3.11.*' and sys_platform == 'emscripten')",
+    "python_full_version == '3.11.*' or (python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten')",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2e/43/25a8dcd3feedd735039a8f0b5b7e3b118232b5eae288c4fd9ab200d41094/rpds_py-2026.5.1.tar.gz", hash = "sha256:07b24fea40541e28570e5b795a4a38fbdcd12550c06bd0748005ecc8116ca256", size = 64459, upload-time = "2026-05-28T12:02:13.232Z" }
 wheels = [
@@ -1549,7 +1549,7 @@ wheels = [
 
 [[package]]
 name = "semble"
-version = "0.7.0"
+version = "0.7.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "model2vec" },
@@ -1562,9 +1562,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "vicinity" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b1/36/322a4802521f6a84b1ac5ed1dbd539129c439c78cfaaef1897f79ad8ba1a/semble-0.7.0.tar.gz", hash = "sha256:83a2bfeea20854d1354cfa95ed83ad580fac5dcf8ccdbd4f987da216bf5f694f", size = 121881, upload-time = "2026-10-16T12:16:20.02Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f7/91/d9a3bf2bfc3af597b6e4a1703efe21034644f97d4ebfe0932f0575302b2d/semble-0.7.1.tar.gz", hash = "sha256:7f7f24e319cf9d83ed31617c07f0ce053e1ee09cf65f173202d23cd27e365f35", size = 125409, upload-time = "2026-10-29T08:03:09.184Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/af/10/00ed65627f5050d006ea01b363f709bdb208d037176bb2fb8e7044df5c12/semble-0.7.0-py3-none-any.whl", hash = "sha256:06c568d5a06f3a5352f22357d5a7ab17525d4404fddde8f1ae1405e3e87ac4a7", size = 91636, upload-time = "2026-10-16T12:16:18.518Z" },
+    { url = "https://files.pythonhosted.org/packages/a9/df/4cbd49d3ab930f32bf078213e8abfdda17125930ac1c93ffe0563ab7f7ed/semble-0.7.1-py3-none-any.whl", hash = "sha256:198f4e21e02a9bef7103f73c6b075937aa1cabf47a4b69c617fc8007f529584a", size = 94044, upload-time = "2026-10-29T08:03:07.488Z" },
 ]
 
 [package.optional-dependencies]
@@ -1589,8 +1589,8 @@ mcp = [
 [package.metadata]
 requires-dist = [
     { name = "pyinstaller", specifier = ">=6.0" },
-    { name = "semble", specifier = ">=0.7.0" },
-    { name = "semble", extras = ["mcp"], marker = "extra == 'mcp'", specifier = ">=0.7.0" },
+    { name = "semble", specifier = ">=0.7.1" },
+    { name = "semble", extras = ["mcp"], marker = "extra == 'mcp'", specifier = ">=0.7.1" },
 ]
 provides-extras = ["mcp"]
 
